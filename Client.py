@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad, unpad 
+from Crypto.Util.Padding import pad, unpad #biblioteca para fazer preenchimento
 from base64 import b64encode, b64decode # biblioteca que transforma os dados dem ASCII ou em binário
 import socket
 import sys
@@ -11,9 +11,9 @@ import traceback
 import os
 
 
-key= b']\x9c\xdbC\x17\x1f\xfa\x89\xda\x12kf\x15\xee\r\xb2'
+key= b']\x9c\xdbC\x17\x1f\xfa\x89\xda\x12kf\x15\xee\r\xb2' #chave simétrica
 
-iv = b'f\xf0b\xc2E\xa2\xb8\xc5W^\xf1\x8c\xe1`\xbe2'
+iv = b'f\xf0b\xc2E\xa2\xb8\xc5W^\xf1\x8c\xe1`\xbe2' #vetor de iniciação para ser usado no CBC
 
 
 class Server(threading.Thread):
@@ -96,8 +96,8 @@ class Client(threading.Thread):
         
             msg = user_name + ': ' + msg + '\n'
             cipher = AES.new(key,AES.MODE_CBC, iv);  #criar a cifra com chave e o modo em CBC
-            ct_bytes = cipher.encrypt(pad(msg.encode('utf-8'), AES.block_size))
-            ct = b64encode(ct_bytes).decode('utf-8')
+            ct_bytes = cipher.encrypt(pad(msg.encode('utf-8'), AES.block_size)) #criptografa usando padding para deixar o tamanho do bloco do tamanho esperado
+            ct = b64encode(ct_bytes).decode('utf-8') 
             data = ct.encode()
             #print("antes ->"+ str(ct_bytes) +"\n")
            
